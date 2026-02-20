@@ -236,22 +236,61 @@
     .tab-btn:hover:not(.active) { border-color: rgba(255,255,255,0.15); color: var(--text); }
     .skill-panel { display: none; }
     .skill-panel.active { display: block; }
-    .skill-group { margin-bottom: 20px; }
-    .skill-group-label {
-      font-size: 10px; color: var(--muted2); font-family: var(--font-mono);
-      margin-bottom: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+
+    /* 레벨 안내 */
+    .skill-level-guide {
+      display: flex; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;
     }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 7px; }
-    .skill-tag {
-      padding: 5px 12px; border-radius: 5px; font-size: 12px;
-      background: var(--surface); border: 1px solid var(--border);
-      color: var(--text); font-family: var(--font-mono);
-      transition: all 0.15s; cursor: default; letter-spacing: 0.01em;
+    .level-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; color: var(--muted); font-family: var(--font-mono);
     }
-    .skill-tag:hover { border-color: rgba(79,255,176,0.35); color: var(--accent); }
-    .skill-tag.hl {
-      background: rgba(123,156,255,0.08);
-      border-color: rgba(123,156,255,0.35); color: var(--accent3);
+    .level-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .level-dot.high  { background: var(--accent); }
+    .level-dot.mid   { background: var(--accent3); }
+    .level-dot.low   { background: var(--muted2); }
+
+    /* 아코디언 */
+    .accordion { display: flex; flex-direction: column; gap: 6px; }
+    .acc-item { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); }
+    .acc-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; cursor: pointer;
+      transition: background 0.18s; user-select: none;
+      list-style: none;
+    }
+    .acc-header:hover { background: var(--surface2); }
+    .acc-header::-webkit-details-marker { display: none; }
+    .acc-item[open] .acc-header { background: var(--surface2); border-bottom: 1px solid var(--border); }
+    .acc-level {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .acc-level.high { background: var(--accent); box-shadow: 0 0 6px rgba(79,255,176,0.5); }
+    .acc-level.mid  { background: var(--accent3); box-shadow: 0 0 6px rgba(123,156,255,0.4); }
+    .acc-level.low  { background: var(--muted2); }
+    .acc-name { font-size: 14px; font-weight: 600; flex: 1; }
+    .acc-level-text {
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em;
+      padding: 2px 8px; border-radius: 4px;
+    }
+    .acc-level-text.high { color: var(--accent); background: rgba(79,255,176,0.1); border: 1px solid rgba(79,255,176,0.2); }
+    .acc-level-text.mid  { color: var(--accent3); background: rgba(123,156,255,0.1); border: 1px solid rgba(123,156,255,0.2); }
+    .acc-level-text.low  { color: var(--muted); background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+    .acc-arrow {
+      font-size: 10px; color: var(--muted2); transition: transform 0.2s; flex-shrink: 0;
+    }
+    .acc-item[open] .acc-arrow { transform: rotate(180deg); }
+    .acc-body {
+      padding: 16px 18px 18px; font-size: 13px;
+      color: var(--muted); line-height: 1.75;
+      border-top: none;
+    }
+    .acc-body .acc-desc { margin-bottom: 12px; }
+    .acc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .acc-tag {
+      padding: 3px 10px; border-radius: 4px; font-size: 11px;
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--muted); font-family: var(--font-mono);
     }
 
     /* ── HOW I WORK ── */
@@ -528,108 +567,269 @@
       <button class="tab-btn" onclick="showTab(event,'tools')">Tools &amp; Infra</button>
     </div>
 
+    <!-- 레벨 안내 -->
+    <div class="skill-level-guide">
+      <span class="level-badge"><span class="level-dot high"></span>상 — 실무 주도 가능</span>
+      <span class="level-badge"><span class="level-dot mid"></span>중 — 실무 활용 가능</span>
+      <span class="level-badge"><span class="level-dot low"></span>하 — 기본 이해 보유</span>
+    </div>
+
+    <!-- Hard Skills -->
     <div id="tab-hard" class="skill-panel active">
-      <div class="skill-group">
-        <div class="skill-group-label">Backend</div>
-        <div class="skill-tags">
-          <span class="skill-tag hl">Java</span>
-          <span class="skill-tag hl">Spring Boot</span>
-          <span class="skill-tag">Node.js</span>
-          <span class="skill-tag">REST API</span>
-          <span class="skill-tag">C#</span>
-          <span class="skill-tag">VB.NET</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-label">Database</div>
-        <div class="skill-tags">
-          <span class="skill-tag hl">MariaDB</span>
-          <span class="skill-tag hl">PostgreSQL</span>
-          <span class="skill-tag">MSSQL</span>
-          <span class="skill-tag">SQL 튜닝</span>
-          <span class="skill-tag">ETL · 마이그레이션</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-label">Streaming / Pipeline</div>
-        <div class="skill-tags">
-          <span class="skill-tag hl">Apache Kafka</span>
-          <span class="skill-tag">Airflow</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-label">IoT / Embedded</div>
-        <div class="skill-tags">
-          <span class="skill-tag hl">BLE 디바이스 연동</span>
-          <span class="skill-tag">PPG · IMU 센서</span>
-          <span class="skill-tag">IoT Hub 관리</span>
-          <span class="skill-tag">웨어러블 디바이스</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-label">Mobile / Frontend</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Flutter (Android)</span>
-          <span class="skill-tag">JSP</span>
-        </div>
+      <div class="accordion">
+
+        <details class="acc-item" open>
+          <summary class="acc-header">
+            <span class="acc-level high"></span>
+            <span class="acc-name">Java / Spring Boot</span>
+            <span class="acc-level-text high">상</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">헬스케어 IoT 플랫폼의 핵심 백엔드를 Spring Boot로 설계·운영했습니다. REST API 설계부터 Kafka 연동, 디바이스 데이터 파이프라인까지 주도적으로 개발했습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">Spring Boot</span>
+              <span class="acc-tag">REST API</span>
+              <span class="acc-tag">Kafka 연동</span>
+              <span class="acc-tag">JPA</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level high"></span>
+            <span class="acc-name">Database (MariaDB / PostgreSQL)</span>
+            <span class="acc-level-text high">상</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">실시간 생체 데이터의 수집·저장 스키마를 설계하고 SQL 튜닝으로 조회 성능을 개선했습니다. 23개 이상의 EMR 업체 DB를 MSSQL로 마이그레이션한 경험도 있습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">MariaDB</span>
+              <span class="acc-tag">PostgreSQL</span>
+              <span class="acc-tag">MSSQL</span>
+              <span class="acc-tag">SQL 튜닝</span>
+              <span class="acc-tag">ETL · 마이그레이션</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level high"></span>
+            <span class="acc-name">Apache Kafka</span>
+            <span class="acc-level-text high">상</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">웨어러블 디바이스에서 수집된 PPG·IMU 센서 데이터를 실시간으로 처리하는 스트리밍 파이프라인을 Kafka로 설계·운영했습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">실시간 스트리밍</span>
+              <span class="acc-tag">PPG·IMU 파이프라인</span>
+              <span class="acc-tag">Consumer / Producer</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level high"></span>
+            <span class="acc-name">IoT / BLE 디바이스 연동</span>
+            <span class="acc-level-text high">상</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">BLE 기반 웨어러블(늘밴드)과 IoT 허브 간 연동을 구현하고, 센서 Raw 데이터 수집 인프라를 설계했습니다. 디바이스 업체와 직접 협업하며 통신 규격을 조율했습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">BLE 통신</span>
+              <span class="acc-tag">IoT Hub</span>
+              <span class="acc-tag">PPG · IMU 센서</span>
+              <span class="acc-tag">웨어러블 디바이스</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level mid"></span>
+            <span class="acc-name">Node.js</span>
+            <span class="acc-level-text mid">중</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">디바이스 데이터 수집 전용 서버를 Node.js로 개발했습니다. 실시간 데이터 처리에 적합한 이벤트 기반 아키텍처를 활용했습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">디바이스 수집 서버</span>
+              <span class="acc-tag">이벤트 기반 처리</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level mid"></span>
+            <span class="acc-name">Flutter (Android)</span>
+            <span class="acc-level-text mid">중</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">요양원 의료진용 Android 앱을 Flutter로 개발하고 Google Play에 배포했습니다. 실시간 생체 데이터 모니터링 UI를 구현했습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">Flutter</span>
+              <span class="acc-tag">Android</span>
+              <span class="acc-tag">Google Play 배포</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level low"></span>
+            <span class="acc-name">C# / VB.NET</span>
+            <span class="acc-level-text low">하</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">의원급 EMR 솔루션의 접수·진료·수납 모듈을 C#/VB.NET으로 개발·유지보수했습니다. 보험청구·감염병 신고 등 외부 시스템 연동 경험이 있습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">C#</span>
+              <span class="acc-tag">VB.NET</span>
+              <span class="acc-tag">EMR 모듈 개발</span>
+            </div>
+          </div>
+        </details>
+
       </div>
     </div>
 
+    <!-- Soft Skills -->
     <div id="tab-soft" class="skill-panel">
-      <div class="skill-group">
-        <div class="skill-group-label">Problem Solving</div>
-        <div class="skill-tags">
-          <span class="skill-tag hl">현장 문제 발굴 (FGI)</span>
-          <span class="skill-tag hl">데이터 기반 원인 분석</span>
-          <span class="skill-tag">IQR 통계 분석</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-label">Collaboration</div>
-        <div class="skill-tags">
-          <span class="skill-tag">디바이스 업체 협업</span>
-          <span class="skill-tag">현장 의료진 인터뷰</span>
-          <span class="skill-tag">팀원 관리</span>
-          <span class="skill-tag">고객사 기술지원</span>
-          <span class="skill-tag">AI팀·외주사 조율</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-label">Ownership</div>
-        <div class="skill-tags">
-          <span class="skill-tag hl">서비스 전반 주도적 운영</span>
-          <span class="skill-tag">특허 출원 지원</span>
-          <span class="skill-tag">TTA 소프트웨어 시험</span>
-          <span class="skill-tag">정부사업 제안서 작성</span>
-        </div>
+      <div class="accordion">
+
+        <details class="acc-item" open>
+          <summary class="acc-header">
+            <span class="acc-level high"></span>
+            <span class="acc-name">현장 문제 발굴 (FGI)</span>
+            <span class="acc-level-text high">상</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">요양원 간호사를 직접 인터뷰(FGI)하여 생체데이터 정확도 문제를 발굴했습니다. SQL·IQR 통계 분석으로 원인을 규명하고 알고리즘 개선으로 정확도를 75%→90%로 향상시켰습니다.</p>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level high"></span>
+            <span class="acc-name">서비스 전반 주도적 운영</span>
+            <span class="acc-level-text high">상</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">디바이스 연동, 백엔드 개발, 앱 배포, 특허 출원 지원, TTA 인증까지 서비스 전 영역을 주도적으로 담당했습니다. 경계 없이 필요한 일을 찾아서 합니다.</p>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level mid"></span>
+            <span class="acc-name">외부 협업 · 기술 조율</span>
+            <span class="acc-level-text mid">중</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">디바이스 업체, AI팀, 외주사와의 기술 조율을 담당했습니다. 고객사 기술지원 및 정부사업 제안서 작성 경험도 있습니다.</p>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level mid"></span>
+            <span class="acc-name">데이터 기반 의사결정</span>
+            <span class="acc-level-text mid">중</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">직관이 아닌 데이터로 문제를 증명합니다. IQR 통계 분석과 SQL 쿼리로 이상 데이터를 탐지하고, 수치 기반으로 개선 방향을 제시했습니다.</p>
+          </div>
+        </details>
+
       </div>
     </div>
 
+    <!-- Tools & Infra -->
     <div id="tab-tools" class="skill-panel">
-      <div class="skill-group">
-        <div class="skill-group-label">Monitoring</div>
-        <div class="skill-tags">
-          <span class="skill-tag hl">Grafana</span>
-          <span class="skill-tag hl">Loki</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-label">DevOps / Infra</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Docker</span>
-          <span class="skill-tag">AWS EKS · RDS</span>
-          <span class="skill-tag">Jenkins</span>
-          <span class="skill-tag">ArgoCD</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-label">Productivity</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Notion</span>
-          <span class="skill-tag">Jira</span>
-          <span class="skill-tag">Slack</span>
-          <span class="skill-tag">Excel</span>
-        </div>
+      <div class="accordion">
+
+        <details class="acc-item" open>
+          <summary class="acc-header">
+            <span class="acc-level high"></span>
+            <span class="acc-name">Grafana / Loki</span>
+            <span class="acc-level-text high">상</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">실시간 장애 감지 시스템을 Grafana + Loki로 구축하고 자동 알림을 연동했습니다. 디바이스·서버 상태를 24/7 모니터링하는 대시보드를 운영하고 있습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">Grafana 대시보드</span>
+              <span class="acc-tag">Loki 로그 수집</span>
+              <span class="acc-tag">장애 자동 알림</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level mid"></span>
+            <span class="acc-name">Docker / AWS EKS · RDS</span>
+            <span class="acc-level-text mid">중</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">컨테이너 기반 서비스를 AWS EKS에서 운영했습니다. 서비스 확장과 무중단 배포를 위한 인프라 구성 경험이 있습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">Docker</span>
+              <span class="acc-tag">AWS EKS</span>
+              <span class="acc-tag">AWS RDS</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level mid"></span>
+            <span class="acc-name">Jenkins / ArgoCD</span>
+            <span class="acc-level-text mid">중</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">Jenkins-ArgoCD 기반 CI/CD 파이프라인을 구성하고 Flutter 앱 및 백엔드 서비스의 자동 배포를 운영했습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">Jenkins</span>
+              <span class="acc-tag">ArgoCD</span>
+              <span class="acc-tag">CI/CD 파이프라인</span>
+            </div>
+          </div>
+        </details>
+
+        <details class="acc-item">
+          <summary class="acc-header">
+            <span class="acc-level mid"></span>
+            <span class="acc-name">Notion / Jira</span>
+            <span class="acc-level-text mid">중</span>
+            <span class="acc-arrow">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="acc-desc">Notion으로 기술 문서와 스펙을 관리하고, Jira로 스프린트 일정을 조율했습니다. 팀 내 정보 공유 체계를 구축한 경험이 있습니다.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">Notion</span>
+              <span class="acc-tag">Jira</span>
+              <span class="acc-tag">Slack</span>
+            </div>
+          </div>
+        </details>
+
       </div>
     </div>
   </div>
@@ -791,8 +991,12 @@
   function showTab(e, name) {
     document.querySelectorAll('.skill-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + name).classList.add('active');
+    const panel = document.getElementById('tab-' + name);
+    panel.classList.add('active');
     e.target.classList.add('active');
+    // 탭 전환 시 첫 번째 아코디언 열기
+    const first = panel.querySelector('details.acc-item');
+    if (first) first.setAttribute('open', '');
   }
 
   // 스크롤 애니메이션
