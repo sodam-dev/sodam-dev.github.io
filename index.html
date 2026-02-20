@@ -25,6 +25,19 @@
       --radius: 12px;
     }
 
+    html.light {
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --surface2: #ebebef;
+      --border: #d8d8e0;
+      --accent: #00875a;
+      --accent-dim: rgba(0,135,90,0.10);
+      --accent3: #4a6cf7;
+      --text: #1a1a2e;
+      --muted: #5a5a72;
+      --muted2: #9a9ab0;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
@@ -55,6 +68,10 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+    html.light nav {
+      background: rgba(245,245,247,0.92);
     }
     .nav-logo {
       font-family: var(--font-mono); font-size: 13px;
@@ -67,6 +84,17 @@
       transition: color 0.2s; letter-spacing: 0.01em;
     }
     .nav-links a:hover { color: var(--text); }
+
+    /* ── 테마 토글 버튼 ── */
+    #theme-toggle {
+      background: none; border: 1px solid var(--border);
+      border-radius: 6px; width: 32px; height: 32px;
+      cursor: pointer; font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; color: var(--muted);
+    }
+    #theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
     @media (max-width: 640px) {
       nav { padding: 12px 20px; }
       .nav-links { gap: 16px; }
@@ -144,6 +172,8 @@
     }
     .btn-primary { background: var(--accent); color: #0a0a0d; font-weight: 700; }
     .btn-primary:hover { background: #3de89a; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(79,255,176,0.25); }
+    html.light .btn-primary { color: #ffffff; }
+    html.light .btn-primary:hover { background: #007a4d; }
     .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
     .btn-ghost:hover { border-color: rgba(79,255,176,0.5); color: var(--accent); }
 
@@ -432,6 +462,7 @@
     <a href="#how">철학</a>
     <a href="#projects">프로젝트</a>
     <a href="#contact">연락처</a>
+    <button id="theme-toggle" title="테마 전환">🌙</button>
   </div>
 </nav>
 
@@ -968,7 +999,7 @@
     <h2 class="contact-title">함께 성장하고 싶습니다</h2>
     <p class="contact-desc">헬스케어 IT, IoT, PM 관련 이야기라면<br/>언제든 편하게 연락 주세요 :)</p>
     <div class="contact-links">
-      <a href="mailto:yoosodam.dev@gmail.com" class="contact-link">✉️ yoosodam.dev@gmail.com</a>
+      <a href="mailto:yoosodam@gmail.com" class="contact-link">✉️ yoosodam@gmail.com</a>
       <a href="https://github.com/sodam-dev" target="_blank" rel="noopener" class="contact-link">⌥ GitHub</a>
     </div>
   </div>
@@ -985,6 +1016,19 @@
     const h = document.documentElement;
     const pct = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
     el.style.width = pct + '%';
+  });
+
+  // 라이트/다크 테마 토글
+  const toggleBtn = document.getElementById('theme-toggle');
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    document.documentElement.classList.add('light');
+    toggleBtn.textContent = '☀️';
+  }
+  toggleBtn.addEventListener('click', () => {
+    const isLight = document.documentElement.classList.toggle('light');
+    toggleBtn.textContent = isLight ? '☀️' : '🌙';
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
   });
 
   // 스킬 탭
